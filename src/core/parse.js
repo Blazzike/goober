@@ -9,6 +9,10 @@ export let parse = (obj, selector) => {
     let blocks = '';
     let current = '';
 
+    if (Array.isArray(obj)) {
+        return obj.reduce((str, rule) => str + parse(rule, selector), '');
+    }
+
     for (let key in obj) {
         let val = obj[key];
 

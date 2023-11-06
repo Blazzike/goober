@@ -10,10 +10,14 @@ let cache = {};
 
 /**
  * Stringifies a object structure
- * @param {Object} data
+ * @param {Object|Array} data
  * @returns {String}
  */
 let stringify = (data) => {
+    if (Array.isArray(data)) {
+        return data.reduce((str, rule) => str + stringify(rule), '');
+    }
+
     if (typeof data == 'object') {
         let out = '';
         for (let p in data) out += p + stringify(data[p]);
@@ -25,7 +29,7 @@ let stringify = (data) => {
 
 /**
  * Generates the needed className
- * @param {String|Object} compiled
+ * @param {String|Object|Array} compiled
  * @param {Object} sheet StyleSheet target
  * @param {Object} global Global flag
  * @param {Boolean} append Append or not
